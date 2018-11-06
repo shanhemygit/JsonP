@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>search</title>
+    <style>
+        ul,li{
+               margin: 0;
+               padding: 0;
+               list-style: none;
+           }
+           a{
+               text-decoration: none;
+               display:block;
+               padding-left: 5px;
+
+           }
+           a:link{
+               color: #333;
+           }
+           a:visited{
+               color: #333;
+           }
+           .wrapper{
+               width: 300px;
+               height: 45px;
+               position: absolute;
+               top: 50%;
+               left: 50%;
+               transform: translate(-50%,-50%);
+               outline: none;
+           }
+           input{
+               width: 300px;
+               height: 45px;
+               box-sizing: border-box;
+               border: 1px solid #999;
+           }
+           .search-list{
+               position: absolute;
+               top: 45px;
+               left: 0;
+               width: 100%;
+               border: 1px solid #444;
+               display: none;
+           }
+           .search-list li:hover{
+               background-color: #ccc;
+           }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input type="text">
+        <ul class="search-list"></ul>
+    </div>
+    <script>
+        var inpu = document.getElementsByTagName("input")[0];
+        var ul = document.getElementsByClassName('search-list')[0];
+        var str = "";
+        inpu.addEventListener("input", function () {
+            str = "";
+            //删除多次搜索产生多余的script标签
+             var parent =document.getElementsByTagName("body")[0];
+             var child = document.getElementsByClassName("sc")[0];
+             if(child){
+                parent.removeChild(child)
+             }
+            var oscript = document.createElement("script");
+            oscript.className = "sc"
+            oscript.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + this.value + "&cb=seList";
+            document.body.appendChild(oscript);
+        })
+        function seList(data) {
+            var dataList = data.s
+            if (dataList.length > 0) {
+                dataList.forEach(function (ele, index) {
+                    str += "<li><a href='https://www.baidu.com/s?wd="+ele+"'>" + ele + "</a></li>";
+                });
+                ul.innerHTML = str;
+                ul.style.display = "block";
+            }else{
+                ul.style.display = "none";
+            }
+           
+          
+        }
+    </script>
+</body>
+
+</html>
